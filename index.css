@@ -14,12 +14,31 @@ body
 #viewport .main-content {
     position: absolute;
     width: 100%;
-    top: 44px;
     bottom: 0;
     height: auto;
 }
 
 #viewport.dx-theme-win8 .main-content {
+    top: 46px;
+}
+
+#viewport.dx-theme-android .main-content {
+    top: 48px;
+}
+
+#viewport.dx-theme-ios.dx-version-major-6 .main-content {
+    top: 46px;
+}
+
+#viewport.dx-theme-ios.dx-version-major-7 .main-content {
+    top: 45px;
+}
+
+#viewport.dx-theme-tizen .main-content {
+    top: 45px;
+}
+
+#viewport.dx-theme-generic .main-content {
     top: 46px;
 }
 

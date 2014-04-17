@@ -1,9 +1,9 @@
 /*! 
 * DevExpress PhoneJS
-* Version: 13.2.6
-* Build date: Dec 26, 2013
+* Version: 13.2.9
+* Build date: Apr 15, 2014
 *
-* Copyright (c) 2012 - 2013 Developer Express Inc. ALL RIGHTS RESERVED
+* Copyright (c) 2012 - 2014 Developer Express Inc. ALL RIGHTS RESERVED
 * EULA: http://phonejs.devexpress.com/EULA
 */
 
@@ -95,6 +95,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   display: none !important;
 }
+.dx-inactive-view .dx-loadindicator
+{
+  display: none;
+}
 .dx-clearfix:before, .dx-clearfix:after
 {
   display: table;
@@ -177,18 +181,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-fieldset .dx-field-value
 {
   float: right;
-  width: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   -ms-text-overflow: ellipsis;
   white-space: nowrap;
   margin: 0;
+  width: 60%;
+}
+.dx-button-disabled
+{
+  cursor: default;
 }
 .dx-button
 {
   display: inline-block;
-  margin: 1px 0;
   cursor: pointer;
   text-align: center;
   vertical-align: middle;
@@ -231,6 +238,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: inline;
   vertical-align: middle;
 }
+.dx-scrollable-scrollbar-simulated
+{
+  position: relative;
+}
 .dx-scrollable
 {
   height: 100%;
@@ -245,13 +256,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   display: none;
 }
-.dx-scrollable.dx-scrollable-native.dx-scrollable-scrollbar-simulated
-{
-  position: relative;
-}
 .dx-scrollable.dx-scrollable-native.dx-scrollable-scrollbar-simulated .dx-scrollable-scrollbar
 {
   display: block;
+}
+.dx-scrollable.dx-scrollable-native .dx-scrollable-content
+{
+  -webkit-transform: translateZ(0);
 }
 .dx-scrollable.dx-scrollable-native.dx-scrollable-vertical, .dx-scrollable.dx-scrollable-native.dx-scrollable-vertical .dx-scrollable-container
 {
@@ -271,6 +282,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   overflow-x: auto;
   overflow-y: auto;
   -ms-touch-action: pan-y pan-x;
+  float: none;
 }
 .dx-scrollable.dx-scrollable-native.dx-scrollable-disabled, .dx-scrollable.dx-scrollable-native.dx-scrollable-disabled .dx-scrollable-container
 {
@@ -284,13 +296,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -webkit-overflow-scrolling: touch;
   position: relative;
 }
-.dx-scrollable.dx-scrollable-native .dx-scrollable-content
-{
-  -webkit-transform: translateZ(0);
-}
 .dx-scrollable.dx-scrollable-native.dx-scrollable-scrollbars-hidden ::-webkit-scrollbar
 {
-  display: none;
+  opacity: 0;
 }
 .dx-scrollable.dx-scrollable-native.dx-scrollable-native-ios .dx-scrollable-content
 {
@@ -304,11 +312,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-scrollable.dx-scrollable-native.dx-scrollable-native-generic .dx-scrollable-content
 {
   height: auto;
-  -webkit-transform: translateZ(0);
 }
 .dx-scrollable.dx-scrollable-native.dx-scrollable-native-android
 {
   overflow: hidden;
+}
+.dx-scrollable.dx-scrollable-native.dx-scrollable-native-android .dx-scrollable-content
+{
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  backface-visibility: visible;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
 }
 .dx-scrollable-container
 {
@@ -319,12 +338,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -ms-touch-action: none;
   -webkit-tap-highlight-color: transparent;
 }
+.dx-scrollable-container:focus
+{
+  outline: none;
+}
 .dx-scrollable-content
 {
   position: relative;
   min-height: 100%;
   -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0,0,0);
 }
 .dx-scrollable-content:before, .dx-scrollable-content:after
 {
@@ -336,9 +358,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   clear: both;
 }
-.dx-scrollable-horizontal .dx-scrollable-content
+.dx-scrollable-horizontal .dx-scrollable-content, .dx-scrollable-both .dx-scrollable-content
 {
   float: left;
+  min-width: 100%;
   display: block;
 }
 .dx-scrollable-scrollbar
@@ -353,7 +376,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-scrollable-scrollbar.dx-scrollbar-vertical .dx-scrollable-scroll
 {
-  min-height: 15px;
   width: 5px;
 }
 .dx-scrollable-scrollbar.dx-scrollbar-horizontal
@@ -364,28 +386,68 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-scrollable-scrollbar.dx-scrollbar-horizontal .dx-scrollable-scroll
 {
-  min-width: 15px;
   height: 5px;
 }
 .dx-scrollable-scrollbar .dx-scrollable-scroll
 {
-  opacity: .5;
+  background-color: #888;
+  background-color: rgba(0,0,0,.5);
   position: relative;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-transition: opacity 0 linear 0;
-  -moz-transition: opacity 0 linear 0;
-  -o-transition: opacity 0 linear 0;
-  transition: opacity 0 linear 0;
+  -webkit-transform: translate(0,0);
+  -webkit-transition: background-color 0 linear 0;
+  -moz-transition: background-color 0 linear 0;
+  -o-transition: background-color 0 linear 0;
+  transition: background-color 0 linear 0;
 }
 .dx-scrollable-scrollbar .dx-scrollable-scroll.dx-state-invisible
 {
   display: block !important;
-  opacity: 0;
-  -webkit-transition: opacity 500ms linear 1s;
-  -moz-transition: opacity 500ms linear 1s;
-  -o-transition: opacity 500ms linear 1s;
-  transition: opacity 500ms linear 1s;
+  background-color: transparent;
+  -webkit-transition: background-color 500ms linear 1s;
+  -moz-transition: background-color 500ms linear 1s;
+  -o-transition: background-color 500ms linear 1s;
+  transition: background-color 500ms linear 1s;
+}
+.dx-scrollable-hidden
+{
+  position: absolute;
+  -webkit-transform: translate(10000px,10000px);
+  -moz-transform: translate(10000px,10000px);
+  -ms-transform: translate(10000px,10000px);
+  -o-transform: translate(10000px,10000px);
+  transform: translate(10000px,10000px);
+}
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-android .dx-scrollview-content
+{
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-android .dx-scrollview-scrollbottom
+{
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-android .dx-scrollview-pull-down
+{
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-android .dx-scrollview-pull-down .dx-scrollview-pull-down-image
+{
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
 }
 .dx-scrollview.dx-scrollable-native.dx-scrollable-native-android .dx-scrollview-top-pocket
 {
@@ -398,7 +460,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   width: 100%;
   top: 0;
   padding: 0;
-  background: #2c9fc9;
   margin: 0 auto -2px;
   -webkit-transition: width 100ms linear 0;
   -moz-transition: width 100ms linear 0;
@@ -411,7 +472,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   position: absolute;
   width: 3px;
   height: 3px;
-  background: #fff;
   top: 0;
   left: 0;
   opacity: 0;
@@ -506,17 +566,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   position: absolute;
   left: 0;
   width: 100%;
-  z-index: -1;
   overflow-y: auto;
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
   transition: transform 400ms ease;
-  -webkit-transform: translate3d(0,0,0) scale(1);
-  -moz-transform: translate3d(0,0,0) scale(1);
-  -ms-transform: translate3d(0,0,0) scale(1);
-  -o-transform: translate3d(0,0,0) scale(1);
-  transform: translate3d(0,0,0) scale(1);
+  -webkit-transform: translate(0,0);
+  -moz-transform: translate(0,0);
+  -ms-transform: translate(0,0);
+  -o-transform: translate(0,0);
+  transform: translate(0,0);
 }
 .dx-scrollview.dx-scrollable-native.dx-scrollable-native-ios .dx-scrollview-content
 {
@@ -524,51 +583,50 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
   transition: transform 400ms ease;
-  -webkit-transform: translate3d(0,0,0) scale(1);
-  -moz-transform: translate3d(0,0,0) scale(1);
-  -ms-transform: translate3d(0,0,0) scale(1);
-  -o-transform: translate3d(0,0,0) scale(1);
-  transform: translate3d(0,0,0) scale(1);
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical.dx-scrollable-disabled
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-disabled
 {
   overflow-y: auto;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical.dx-scrollable-disabled .dx-scrollable-container
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-disabled .dx-scrollable-container
 {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical.dx-scrollable-disabled .dx-scrollable-container .dx-scrollable-content
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-disabled .dx-scrollable-container .dx-scrollable-content
 {
   overflow-y: hidden;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical.dx-scrollable-disabled .dx-scrollable-container .dx-scrollview-content
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-disabled .dx-scrollable-container .dx-scrollview-content
 {
   overflow-y: hidden;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollable-content
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollable-content
 {
   height: 100%;
+  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  -ms-scroll-snap-type: mandatory;
-  -ms-scroll-snap-points-y: snapList(0%,80px,100%);
   -ms-scroll-chaining: none;
   -ms-touch-action: pan-y;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollable-content:after
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollable-content:after
 {
   display: block;
   content: " ";
   height: 30px;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollable-content .dx-scrollview-top-pocket
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollable-content .dx-scrollview-top-pocket
 {
   min-height: 30px;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollview-content
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollview-content
 {
   height: 100%;
   overflow-y: auto;
@@ -576,35 +634,35 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -ms-overflow-style: -ms-autohiding-scrollbar;
   -ms-touch-action: pan-y;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-locked, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-refreshing, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-loading
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-locked, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-refreshing, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-loading
 {
   -ms-touch-action: none;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-locked .dx-scrollable-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollable-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollable-content
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-locked .dx-scrollable-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollable-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollable-content
 {
   -ms-touch-action: none;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-locked .dx-scrollview-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollview-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollview-content
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-locked .dx-scrollview-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollview-content, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollview-content
 {
   -ms-touch-action: none;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollview-pull-down-indicator, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollview-pull-down-indicator
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollview-pull-down-indicator, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollview-pull-down-indicator
 {
   opacity: 1;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollview-pull-down-image, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollview-pull-down-image
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-refreshing .dx-scrollview-pull-down-image, .dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container.dx-scrollview-pull-down-loading .dx-scrollview-pull-down-image
 {
   opacity: 0;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollview-pull-down-indicator
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollview-pull-down-indicator
 {
   transition: opacity ease 400ms;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollview-pull-down-indicator progress::-ms-fill
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollview-pull-down-indicator progress::-ms-fill
 {
   animation-name: -ms-ring;
 }
-.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8.dx-scrollable-vertical .dx-scrollable-container .dx-scrollview-bottom-pocket
+.dx-scrollview.dx-scrollable-native.dx-scrollable-native-win8 .dx-scrollable-container .dx-scrollview-bottom-pocket
 {
   width: 100%;
   text-align: center;
@@ -616,7 +674,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-scrollview .dx-scrollview-content
 {
-  position: relative;
+  position: static;
 }
 .dx-scrollview .dx-scrollview-content:before, .dx-scrollview .dx-scrollview-content:after
 {
@@ -635,11 +693,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   padding-top: 30px;
   top: -80px;
   overflow: hidden;
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  -ms-transform: translate3d(0,0,0);
-  -o-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate(0,0);
+  -moz-transform: translate(0,0);
+  -ms-transform: translate(0,0);
+  -o-transform: translate(0,0);
+  transform: translate(0,0);
   -webkit-user-drag: none;
   -moz-user-drag: none;
   -ms-user-drag: none;
@@ -682,11 +740,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -ms-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
-  -webkit-transform: translate3d(0,0,0) rotate(0);
-  -moz-transform: translate3d(0,0,0) rotate(0);
-  -ms-transform: translate3d(0,0,0) rotate(0);
-  -o-transform: translate3d(0,0,0) rotate(0);
-  transform: translate3d(0,0,0) rotate(0);
+  -webkit-transform: translate(0,0) rotate(0);
+  -moz-transform: translate(0,0) rotate(0);
+  -ms-transform: translate(0,0) rotate(0);
+  -o-transform: translate(0,0) rotate(0);
+  transform: translate(0,0) rotate(0);
   -ms-transform: rotate(0);
   -webkit-transition: -webkit-transform .2s linear;
   -moz-transition: -moz-transform .2s linear;
@@ -715,11 +773,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-scrollview .dx-scrollview-pull-down.dx-scrollview-pull-down-ready .dx-scrollview-pull-down-image
 {
-  -webkit-transform: translate3d(0,0,0) rotate(-180deg);
-  -moz-transform: translate3d(0,0,0) rotate(-180deg);
-  -ms-transform: translate3d(0,0,0) rotate(-180deg);
-  -o-transform: translate3d(0,0,0) rotate(-180deg);
-  transform: translate3d(0,0,0) rotate(-180deg);
+  -webkit-transform: translate(0,0) rotate(-180deg);
+  -moz-transform: translate(0,0) rotate(-180deg);
+  -ms-transform: translate(0,0) rotate(-180deg);
+  -o-transform: translate(0,0) rotate(-180deg);
+  transform: translate(0,0) rotate(-180deg);
   -ms-transform: rotate(-180deg);
 }
 .dx-scrollview .dx-scrollview-pull-down.dx-scrollview-pull-down-loading .dx-scrollview-pull-down-image
@@ -736,18 +794,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   padding: 10px 0;
   overflow: hidden;
   text-align: center;
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  -ms-transform: translate3d(0,0,0);
-  -o-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate(0,0);
+  -moz-transform: translate(0,0);
+  -ms-transform: translate(0,0);
+  -o-transform: translate(0,0);
+  transform: translate(0,0);
 }
 .dx-scrollview .dx-scrollview-scrollbottom .dx-scrollview-scrollbottom-indicator
 {
   display: inline-block;
-  height: 23px;
-  line-height: 30px;
-  padding-top: 7px;
   margin: 0 10px 0 0;
   -webkit-user-drag: none;
   -moz-user-drag: none;
@@ -757,7 +812,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-scrollview .dx-scrollview-scrollbottom .dx-scrollview-scrollbottom-text
 {
-  display: inline;
+  display: inline-block;
+  margin-top: -20px;
   vertical-align: middle;
   -webkit-user-drag: none;
   -moz-user-drag: none;
@@ -768,6 +824,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-scrollview .dx-scrollview-scrollbottom.dx-scrollview-scrollbottom-end
 {
   opacity: 0;
+}
+.dx-scrollview .dx-scrollview-scrollbottom:before
+{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 .dx-scrollable.dx-scrollview-hybrid
 {
@@ -820,12 +883,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   cursor: default;
 }
+.dx-slider:before
+{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
 .dx-slider .dx-slider-wrapper
 {
   position: relative;
   display: inline-block;
   width: 100%;
   cursor: pointer;
+  vertical-align: middle;
 }
 .dx-slider .dx-slider-wrapper .dx-slider-range
 {
@@ -868,12 +939,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -o-user-select: none;
   user-select: none;
 }
+.dx-switch:before
+{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
 .dx-switch.dx-state-disabled
 {
   cursor: default;
 }
 .dx-switch .dx-switch-wrapper
 {
+  vertical-align: middle;
+  display: inline-block;
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -932,6 +1012,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -o-user-drag: none;
   user-drag: none;
 }
+.dx-tabs .dx-tab.dx-state-disabled
+{
+  cursor: default;
+}
+.dx-tabs.dx-state-disabled .dx-tab
+{
+  cursor: default;
+}
 .dx-map
 {
   position: relative;
@@ -981,6 +1069,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-editbox .dx-editbox-input
 {
   width: 100%;
+  height: 100%;
   border: 0;
   outline: 0;
   -webkit-appearance: none;
@@ -997,6 +1086,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-editbox .dx-placeholder
 {
   position: relative;
+  height: 100%;
+  width: 100%;
 }
 .dx-editbox .dx-placeholder:before
 {
@@ -1010,10 +1101,50 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   display: none;
 }
+.dx-textbox.dx-searchbox
+{
+  position: relative;
+}
+.dx-textbox.dx-searchbox .dx-clear-button-area
+{
+  right: 0;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  display: inline-block;
+}
+.dx-textbox.dx-searchbox .dx-clear-button-area .dx-icon-clear
+{
+  position: absolute;
+  display: inline-block;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dx-textbox.dx-searchbox .dx-icon-search
+{
+  overflow: hidden;
+  text-indent: -9999px;
+  position: absolute;
+  display: inline-block;
+}
+.dx-textbox.dx-searchbox.dx-empty-input .dx-clear-button-area
+{
+  display: none;
+}
+.dx-textbox.dx-searchbox input[type="search"]::-webkit-search-decoration, .dx-textbox.dx-searchbox input[type="search"]::-webkit-search-cancel-button, .dx-textbox.dx-searchbox input[type="search"]::-webkit-search-results-button, .dx-textbox.dx-searchbox input[type="search"]::-webkit-search-results-decoration
+{
+  display: none;
+}
+.dx-textbox.dx-searchbox input[type="search"]::-ms-clear
+{
+  display: none;
+}
 .dx-textarea .dx-editbox-input
 {
   resize: none;
   font-family: inherit;
+  display: block;
 }
 .dx-numberbox input[type=number]::-webkit-inner-spin-button
 {
@@ -1027,6 +1158,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   position: relative;
   display: table-cell;
+  vertical-align: top;
 }
 .dx-toolbar
 {
@@ -1088,6 +1220,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -o-user-drag: none;
   user-drag: none;
 }
+.dx-toolbar .dx-toolbar-label>div
+{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .dx-toolbar .dx-toolbar-center
 {
   margin: 0 auto;
@@ -1100,6 +1240,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   top: 0;
   height: 100%;
 }
+.dx-toolbar.dx-state-disabled .dx-button
+{
+  cursor: default;
+}
+.dx-toolbar.dx-state-disabled .dx-tab
+{
+  cursor: default;
+}
 .dx-list
 {
   min-height: 3em;
@@ -1107,8 +1255,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-list .dx-list-item
 {
+  position: static;
   cursor: pointer;
   -webkit-backface-visibility: hidden;
+}
+.dx-list.dx-scrollable-native-android.dx-scrollview-obsolete-android-browser .dx-list-item
+{
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  backface-visibility: visible;
 }
 .dx-list .dx-list-item-response-wait
 {
@@ -1117,6 +1273,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -moz-transition: opacity .2s linear 0;
   -o-transition: opacity .2s linear 0;
   transition: opacity .2s linear 0;
+}
+.dx-list.dx-list-editing
+{
+  position: relative;
 }
 .dx-list .dx-list-item-bag-container, .dx-list .dx-slide-item-content
 {
@@ -1134,7 +1294,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-list .dx-list-item-left-bag, .dx-list .dx-list-item-right-bag
 {
-  position: relative;
   vertical-align: middle;
   height: 100%;
   width: 0;
@@ -1152,10 +1311,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   display: block;
   float: left;
-  opacity: 0;
-  padding: 10px 0;
+  padding: 3px 0;
 }
-.dx-list .dx-list-item-left-bag .dx-toggle-delete-switch-icon
+.dx-list .dx-list-item-left-bag .dx-icon-toggle-delete
 {
   -webkit-transition: all .1s linear 0;
   -moz-transition: all .1s linear 0;
@@ -1170,17 +1328,35 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -o-transition: all .1s linear 0;
   transition: all .1s linear 0;
 }
+.dx-list .dx-switchable-delete-top-shield, .dx-list .dx-switchable-delete-bottom-shield
+{
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.dx-list .dx-switchable-delete-top-shield
+{
+  top: 0;
+}
+.dx-list .dx-switchable-delete-bottom-shield
+{
+  bottom: 0;
+}
+.dx-list .dx-switchable-delete-item-content-shield
+{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 .dx-list .dx-switchable-delete-button-container
 {
   overflow: hidden;
   position: absolute;
   top: 0;
-  right: -100%;
   bottom: 0;
-  -webkit-transition: right .2s linear 0;
-  -moz-transition: right .2s linear 0;
-  -o-transition: right .2s linear 0;
-  transition: right .2s linear 0;
 }
 .dx-list .dx-switchable-delete-button-wrapper
 {
@@ -1194,7 +1370,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   height: 100%;
   padding-left: 1px;
 }
-.dx-list .dx-switchable-delete-ready .dx-toggle-delete-switch-icon
+.dx-list .dx-switchable-delete-ready
+{
+  position: relative;
+}
+.dx-list .dx-switchable-delete-ready .dx-list-item-content
+{
+  position: relative;
+}
+.dx-list .dx-switchable-delete-ready .dx-icon-toggle-delete
 {
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
@@ -1202,13 +1386,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -o-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
-.dx-list .dx-switchable-delete-ready .dx-switchable-delete-button-container
+.dx-list .dx-slide-item-positioning
 {
-  right: 0 !important;
+  position: relative;
 }
-.dx-list .dx-slide-item-content
+.dx-list .dx-slide-item-positioning .dx-slide-item-content
 {
-  z-index: 1001;
   position: relative;
 }
 .dx-list .dx-slide-item-delete-button-container
@@ -1217,19 +1400,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: absolute;
+  overflow: hidden;
   top: 0;
-  right: 0;
   bottom: 0;
+  left: 100%;
+  right: 0;
 }
 .dx-list .dx-slide-item-delete-button
 {
   display: table;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
-}
-.dx-list .dx-slide-item-delete-button-hidden .dx-slide-item-delete-button-container .dx-slide-item-delete-button
-{
-  opacity: 0;
 }
 .dx-list .dx-slide-item-delete-button-content
 {
@@ -1246,15 +1430,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   padding: 0 3em;
 }
-.dx-list.dx-list-editing .dx-swipe-delete-button
-{
-  padding-right: 10px;
-}
-.dx-list.dx-list-editing .dx-toggle-delete-switch
-{
-  opacity: 1;
-}
 .dx-list.dx-state-disabled, .dx-list.dx-state-disabled .dx-list-item, .dx-list.dx-state-disabled.dx-list-item
+{
+  cursor: default;
+}
+.dx-list.dx-state-disabled .dx-toggle-delete-switch, .dx-list.dx-state-disabled .dx-switchable-delete-button
 {
   cursor: default;
 }
@@ -1265,7 +1445,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-tileview .dx-tile
 {
   position: absolute !important;
-  -webkit-backface-visibility: hidden;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1293,19 +1472,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-overlay-wrapper
 {
-  position: absolute;
   z-index: 1000;
   top: 0;
   left: 0;
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  -ms-transform: translate3d(0,0,0);
-  -o-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
 }
 .dx-overlay-wrapper.dx-overlay-modal
 {
-  position: fixed;
   width: 100%;
   height: 100%;
 }
@@ -1318,11 +1490,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   position: absolute;
   z-index: 1000;
   overflow: hidden;
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  -ms-transform: translate3d(0,0,0);
-  -o-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
 }
 .dx-toast-wrapper .dx-toast-content
 {
@@ -1333,6 +1500,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-toast-wrapper .dx-toast-content .dx-toast-icon
 {
   display: inline-block;
+  background-size: contain;
   width: 35px;
   height: 35px;
   margin-right: 10px;
@@ -1402,13 +1570,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-popover-wrapper .dx-popover-arrow
 {
-  width: 10px;
-  height: 10px;
   z-index: 2000;
   width: 21px;
   height: 11px;
   overflow: hidden;
-  position: relative;
+  position: absolute;
 }
 .dx-popover-wrapper .dx-popover-arrow:after
 {
@@ -1429,6 +1595,34 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-popover-wrapper .dx-popover-arrow.dx-popover-arrow-flipped:after
 {
   top: -14px;
+}
+.dx-popover-wrapper.dx-position-top .dx-popover-arrow:after
+{
+  top: -15px;
+}
+.dx-popover-wrapper.dx-position-right .dx-popover-arrow, .dx-popover-wrapper.dx-position-left .dx-popover-arrow
+{
+  width: 11px;
+  height: 21px;
+}
+.dx-popover-wrapper.dx-position-right .dx-popover-arrow:after, .dx-popover-wrapper.dx-position-left .dx-popover-arrow.dx-popover-arrow-flipped:after
+{
+  top: 0;
+  left: 5px;
+}
+.dx-popover-wrapper.dx-position-left .dx-popover-arrow:after, .dx-popover-wrapper.dx-position-right .dx-popover-arrow.dx-popover-arrow-flipped:after
+{
+  top: 0;
+  left: -15px;
+}
+.dx-popover-wrapper.dx-tooltip .dx-overlay-content
+{
+  text-align: center;
+}
+.dx-popover-wrapper.dx-tooltip .dx-overlay-content .dx-popup-content
+{
+  padding: 13px 17px;
+  font-size: .85em;
 }
 .dx-gallery
 {
@@ -1460,8 +1654,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   background-size: 100% 100%;
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  backface-visibility: visible;
 }
-.dx-gallery.dx-state-disabled .dx-gallery-nav-button-prev, .dx-gallery.dx-state-disabled .dx-gallery-nav-button-next
+.dx-gallery.dx-state-disabled .dx-gallery-nav-button-prev, .dx-gallery.dx-state-disabled .dx-gallery-nav-button-next, .dx-gallery.dx-state-disabled .dx-gallery-indicator-item
 {
   cursor: default;
 }
@@ -1473,8 +1671,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 {
   right: 0;
 }
+.dx-gallery.dx-gallery-active .dx-gallery-item, .dx-gallery.dx-gallery-active .dx-gallery-indicator, .dx-gallery.dx-gallery-active .dx-gallery-nav-button-prev, .dx-gallery.dx-gallery-active .dx-gallery-nav-button-next
+{
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 .dx-gallery .dx-gallery-item
 {
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  backface-visibility: visible;
   text-align: center;
   position: absolute;
   width: 100%;
@@ -1483,6 +1692,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-gallery .dx-gallery-indicator
 {
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  backface-visibility: visible;
   position: absolute;
   bottom: 10px;
   width: 100%;
@@ -1494,6 +1707,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: inline-block;
   height: 10px;
   margin: 0 2px;
+  cursor: pointer;
 }
 .dx-gallery .dx-gallery-item-loop
 {
@@ -1502,6 +1716,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-gallery.dx-gallery-loop .dx-gallery-item-loop
 {
   display: block;
+}
+.dx-device-ios .dx-gallery, .dx-device-ios .dx-gallery-item, .dx-device-ios .dx-gallery-indicator, .dx-device-ios .dx-gallery-nav-button-prev, .dx-device-ios .dx-gallery-nav-button-next
+{
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .dx-lookup
 {
@@ -1521,6 +1742,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -o-text-overflow: ellipsis;
   -ms-text-overflow: ellipsis;
   white-space: nowrap;
+}
+.dx-lookup.dx-state-disabled .dx-lookup-field
+{
+  cursor: default;
 }
 .dx-lookup-popup-wrapper .dx-list-item
 {
@@ -1568,6 +1793,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .dx-action-sheet-popup-wrapper .dx-overlay-content .dx-action-sheet-item, .dx-action-sheet-popup-wrapper .dx-overlay-content .dx-action-sheet-cancel
 {
   width: 100%;
+}
+.dx-action-sheet-popup-wrapper .dx-overlay-content .dx-action-sheet-container.dx-state-disabled .dx-button
+{
+  cursor: default;
+}
+.dx-action-sheet-popup-wrapper .dx-popup-title, .dx-action-sheet-popover-wrapper .dx-popup-title
+{
+  word-wrap: break-word;
 }
 .dx-loadindicator
 {
@@ -1638,18 +1871,27 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   user-drag: none;
   text-align: center;
 }
-.dx-loadpanel-content .dx-loadpanel-image
+.dx-loadpanel-content .dx-loadpanel-content-wrapper
 {
-  height: 30px;
+  vertical-align: middle;
+  display: inline-block;
+  width: 100%;
 }
-.dx-loadpanel-content .dx-loadpanel-message
+.dx-loadpanel-content .dx-loadpanel-content-wrapper .dx-loadpanel-message
 {
-  margin: 25px;
   text-align: center;
 }
-.dx-loadpanel-content .dx-loadpanel-message.dx-loadpanel-has-indicator
+.dx-loadpanel-content.dx-loadpanel-pane-hidden
 {
-  margin: 10px;
+  background: none !important;
+  border: none !important;
+}
+.dx-loadpanel-content:before
+{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 .dx-overlay-wrapper.dx-loadpanel-wrapper, .dx-overlay-wrapper.dx-loadpanel-wrapper .dx-overlay-shader, .dx-overlay-wrapper.dx-loadpanel-wrapper .dx-overlay-content
 {
@@ -1670,6 +1912,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 .dx-selectbox
 {
+  cursor: pointer;
+}
+.dx-selectbox .dx-selectbox-container
+{
   position: relative;
 }
 .dx-selectbox .dx-selectbox-value
@@ -1679,6 +1925,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   position: absolute;
   top: 0;
   left: 0;
+}
+.dx-selectbox .dx-texteditor-input
+{
+  cursor: inherit;
+}
+.dx-state-disabled
+{
+  cursor: default;
+}
+.dx-radio-group.dx-state-disabled .dx-radio-button
+{
+  cursor: default;
 }
 .dx-radio-group .dx-radio-button
 {
@@ -1692,9 +1950,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   padding-right: 10px;
   padding-left: 5px;
 }
+.dx-radio-group.dx-radio-group-horizontal:before, .dx-radio-group.dx-radio-group-horizontal:after
+{
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.dx-radio-group.dx-radio-group-horizontal:after
+{
+  clear: both;
+}
 .dx-radio-group.dx-radio-group-horizontal .dx-radio-button
 {
   float: left;
+}
+.dx-radio-group.dx-radio-group-horizontal .dx-radio-button:last-of-type
+{
+  margin-right: 0;
 }
 .dx-pivottabs
 {
@@ -1795,4 +2067,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+.dx-slideout .dx-slideout-item-container .dx-slideout-shield
+{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
 }
