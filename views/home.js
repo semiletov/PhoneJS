@@ -26,11 +26,11 @@ TipCalculator.home = function(params) {
     });
 
     var totalPerPerson = ko.computed(function() {
-        return (totalTip() - billTotalAsNumber()) / splitNum();
+        return (billTotalAsNumber() - totalTip()) / splitNum();
     });
 
     var totalToPay = ko.computed(function() {
-        var value = totalTip() - billTotalAsNumber();
+        var value = billTotalAsNumber() - totalTip();
 
         switch(roundMode()) {
             case ROUND_DOWN:
