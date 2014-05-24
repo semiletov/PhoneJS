@@ -1,15 +1,33 @@
 ﻿Globalize.addCultureInfo("default", {
     messages: {
-        "tipCalculator": "Tip Calculator",
-        "billTotal": "Bill Total",
-        "tip": "Tip",
-        "split": "Split",
-        "totalToPay": "Total to pay",
-        "totalPerPerson": "Total per person",
-        "totalTip": "Total tip",
-        "tipPerPerson": "Tip per person",
-        "typeHere": "Type here",
+        "tipCalculator": "Скидульник",
+        "billTotal": "Цена",
+        "tip": "Скидка",
+        "split": "Человеки",
+        "totalToPay": "Всего к оплате:",
+        "totalPerPerson": "Всего на человека:",
+        "totalTip": "Размер скидки:",
+        "tipPerPerson": "Скидка на человека:",
+        "typeHere": "Укажите цену тут",
         "roundDown": "Round Down",
         "roundUp": "Round Up"
+    },
+    numberFormat: {
+	",": " ",
+	".": ",",
+	"NaN": "Non Numérique",
+	negativeInfinity: "-Infini",
+	positiveInfinity: "+Infini",
+	percent: {
+	    ",": " ",
+	    ".": ","
+	},
+	currency: {
+	    pattern: ["-n $","n $"],
+	    ",": " ",
+	    ".": ",",
+	    symbol: "р."
+	}
     }
+
 });
